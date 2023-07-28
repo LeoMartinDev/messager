@@ -1,30 +1,36 @@
-import {Button, Container, Flex, MantineProvider, Select, Stack, TextInput} from "@mantine/core";
+import { Container, MantineProvider } from "@mantine/core";
+import { AppContext } from "./AppContext";
+import React from "react";
+import { createApplication } from "./lib";
+import { MainView } from "./views/MainView";
 
 function App() {
+  const [application] = React.useState(createApplication());
+
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS theme={{
-      globalStyles: () => ({
-        'html, body, #root': {
-          width: '100%',
-          height: '100%',
-        }
-      })
-    }}>
-      <Container sx={{
-        width: '100%',
-        height: '100%',
-      }}>
-        <Stack>
-          <Flex gap="md">
-            <Select sx={{flexBasis: 100}} data={['GET', 'POST']}/>
-
-            <TextInput sx={{flex: 1}}/>
-
-            <Button>Send</Button>
-          </Flex>
-        </Stack>
-      </Container>
-    </MantineProvider>
+    <AppContext.Provider value={application}>
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{
+          globalStyles: () => ({
+            "html, body, #root": {
+              width: "100%",
+              height: "100%",
+            },
+          }),
+        }}
+      >
+        <Container
+          sx={{
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          <MainView />
+        </Container>
+      </MantineProvider>
+    </AppContext.Provider>
   );
 }
 

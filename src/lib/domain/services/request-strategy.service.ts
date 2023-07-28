@@ -1,28 +1,30 @@
 import { RequestType, AppRequest } from "../entities/request.entity";
-import { CreateRequestStrategy, RequestStrategy } from "../ports/request.strategy";
+import {
+  CreateRequestStrategy,
+  RequestStrategy,
+} from "../ports/request.strategy";
 
 type RequestStrategyServiceDependencies = {
-  [Type in AppRequest['type']]: CreateRequestStrategy<any>;
+  [Type in AppRequest["type"]]: CreateRequestStrategy<any>;
 };
 
-export type RequestStrategyService = ReturnType<typeof createRequestStrategyService>;
+export type RequestStrategyService = ReturnType<
+  typeof createRequestStrategyService
+>;
 
 export function createRequestStrategyService({
   ...strategies
 }: RequestStrategyServiceDependencies) {
-  const strategiesStore = new Map<RequestType, CreateRequestStrategy<any>>(
-    Object.entries(strategies) as any[]
-  );
-
   return {
-    getStrategyFromRequest<R extends AppRequest>(request: R): RequestStrategy<R> | undefined {
-      const createStrategy = strategiesStore.get(request.type);
-
-      if (!createStrategy) {
-        return;
+    getStrategyFromRequest<R extends AppRequest>(
+      request: R
+    ): RequestStrategy<R> | undefined {
+      switch (request.type) {
+        case RequestType.HTTP:
+          return strategies[RequestType.HTTP](request);
+        default:
+          return undefined;
       }
-
-      return createStrategy(request);
-    }
-  }
+    },
+  };
 }

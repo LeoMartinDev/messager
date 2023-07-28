@@ -1,12 +1,21 @@
-import { HttpMethod, HttpRequest, AppRequest, RequestType } from '../entities/request.entity';
+import {
+  HttpMethod,
+  HttpRequest,
+  AppRequest,
+  RequestType,
+} from "../entities/request.entity";
 
-export function createHttpRequest(): HttpRequest {
+export function createHttpRequest(
+  input?: Partial<Omit<HttpRequest, "type">>
+): HttpRequest {
   return {
+    type: RequestType.HTTP,
     method: HttpMethod.GET,
-    title: 'Untitled',
+    title: "Untitled",
     url: null,
     headers: null,
     body: null,
+    ...input,
   };
 }
 
