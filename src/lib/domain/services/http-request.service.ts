@@ -1,5 +1,5 @@
-import { HttpRequest } from "../entities/request.entity";
+import { HttpRequest, HttpResponse } from "../entities/request.entity";
 
 export type HttpRequestService = {
-  run: (request: HttpRequest) => Promise<void>;
+  run: (request: HttpRequest) => Promise<HttpResponse>;
 };

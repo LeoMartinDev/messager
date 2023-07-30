@@ -16,6 +16,14 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "http": {
+        "all": true,
+        "request": true,
+        "scope": [
+          "https://**",
+          "http://**"
+        ]
       }
     },
     "bundle": {
@@ -31,7 +39,7 @@
       ]
     },
     "security": {
-      "csp": null
+      "csp": ""
     },
     "windows": [
       {
