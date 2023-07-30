@@ -1,4 +1,4 @@
-import { HttpRequest } from "../entities/request.entity";
+import { HttpRequest, HttpResponse } from "../entities/request.entity";
 import { HttpRequestService } from "../services/http-request.service";
 
 type RunHttpRequestUsecaseDependencies = {
@@ -8,7 +8,7 @@ type RunHttpRequestUsecaseDependencies = {
 export function createRunHttpRequestUsecase({
   httpRequestService,
 }: RunHttpRequestUsecaseDependencies) {
-  return async (request: HttpRequest) => {
-    await httpRequestService.run(request);
+  return (request: HttpRequest): Promise<HttpResponse> => {
+    return httpRequestService.run(request);
   };
 }
