@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Flex, Select, Stack, TextInput } from "@mantine/core";
+import Editor from '@monaco-editor/react';
+import { Box, Button, Flex, Select, Stack, TextInput } from "@mantine/core";
 
 import { useApplication } from "../AppContext";
 import { createHttpRequest } from "../lib/domain/model/request.model";
@@ -21,7 +22,7 @@ export function MainView() {
   };
 
   return (
-    <Stack>
+    <Stack h="100%">
       <Flex gap="md">
         <Select sx={{ flexBasis: 100 }} data={["GET", "POST"]} />
 
@@ -30,9 +31,16 @@ export function MainView() {
         <Button onClick={onRunHttpRequestButtonClicked}>Send</Button>
       </Flex>
 
-      {httpResponse && (
-
-      )}
-    </Stack>
+      {
+        httpResponse && (
+          <Box sx={{
+            flex: 1,
+            height: '100%'
+          }}>
+            <Editor height="100%" defaultLanguage="json" defaultValue={httpResponse.body?.toString()} />
+          </Box>
+        )
+      }
+    </Stack >
   );
 }
